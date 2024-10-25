@@ -42,6 +42,38 @@
               "primary": false,
               "nullable": true
             }
+          },
+          "admin": {
+            "db": {
+              "type": "boolean",
+              "default": "'0'",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "colaborador": {
+            "db": {
+              "type": "boolean",
+              "default": "'0'",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "frequentador": {
+            "db": {
+              "type": "boolean",
+              "default": "'0'",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "ativo": {
+            "db": {
+              "type": "boolean",
+              "default": "'0'",
+              "primary": false,
+              "nullable": true
+            }
           }
         },
         "db": {}

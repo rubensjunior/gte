@@ -5,7 +5,7 @@
             <div class="row justify-content-center">
                 <div class="col-8">
                     <h1 class="mb-4">Bem-vindo</h1>
-                    <form id="login">
+                    <form id="login" is="dmx-serverconnect-form" method="post" action="/api/usuarios/login" credentials="true" dmx-on:error="login.reset();toasts.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:unauthorized="login.reset();toasts.warning('E-mail ou senha errados.')" dmx-on:success="login.reset();toasts.success('Bem-vindo!');redirecionamento.goto('/dashboard/')">
                         <div class="form-group mb-3"> <label for="email" class="form-label">E-mail</label>
                             <input type="email" class="form-control py-2" id="email" name="email" aria-describedby="input1_help">
                         </div>

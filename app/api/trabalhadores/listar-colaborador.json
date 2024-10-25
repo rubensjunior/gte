@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "queryColaborador",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "usuarios",
+              "column": "id"
+            },
+            {
+              "table": "usuarios",
+              "column": "nome-completo"
+            },
+            {
+              "table": "usuarios",
+              "column": "email"
+            },
+            {
+              "table": "usuarios",
+              "column": "admin"
+            },
+            {
+              "table": "usuarios",
+              "column": "colaborador"
+            },
+            {
+              "table": "usuarios",
+              "column": "frequentador"
+            },
+            {
+              "table": "usuarios",
+              "column": "ativo"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "usuarios"
+          },
+          "primary": "id",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "usuarios.colaborador",
+                "field": "usuarios.colaborador",
+                "type": "boolean",
+                "operator": "equal",
+                "value": true,
+                "data": {
+                  "table": "usuarios",
+                  "column": "colaborador",
+                  "type": "boolean",
+                  "columnObj": {
+                    "type": "boolean",
+                    "default": "'0'",
+                    "primary": false,
+                    "nullable": true,
+                    "name": "colaborador"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "query": "select `id`, `nome-completo`, `email`, `admin`, `colaborador`, `frequentador`, `ativo` from `usuarios` where `usuarios`.`colaborador` = ? order by `nome-completo` ASC",
+          "orders": [
+            {
+              "table": "usuarios",
+              "column": "nome-completo",
+              "direction": "ASC"
+            }
+          ]
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "nome-completo"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "boolean",
+          "name": "admin"
+        },
+        {
+          "type": "boolean",
+          "name": "colaborador"
+        },
+        {
+          "type": "boolean",
+          "name": "frequentador"
+        },
+        {
+          "type": "boolean",
+          "name": "ativo"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

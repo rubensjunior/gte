@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "identityUsuario",
+        "module": "auth",
+        "action": "identify",
+        "options": {
+          "provider": "autenticacao"
+        },
+        "output": true,
+        "meta": []
+      },
+      {
+        "name": "queryUsuarioLogado",
+        "module": "dbconnector",
+        "action": "single",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "usuarios",
+                "column": "id"
+              },
+              {
+                "table": "usuarios",
+                "column": "nome-completo"
+              },
+              {
+                "table": "usuarios",
+                "column": "email"
+              },
+              {
+                "table": "usuarios",
+                "column": "admin"
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{identityUsuario}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "usuarios"
+            },
+            "primary": "id",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "usuarios.id",
+                  "field": "usuarios.id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{identityUsuario}}",
+                  "data": {
+                    "table": "usuarios",
+                    "column": "id",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "primary": true,
+                      "nullable": false,
+                      "name": "id"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select `id`, `nome-completo`, `email`, `admin` from `usuarios` where `usuarios`.`id` = ?"
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "id"
+          },
+          {
+            "type": "text",
+            "name": "nome-completo"
+          },
+          {
+            "type": "text",
+            "name": "email"
+          },
+          {
+            "type": "boolean",
+            "name": "admin"
+          }
+        ],
+        "type": "dbconnector_single",
+        "outputType": "object"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "index.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "trabalhadores.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "frequentadores.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "atendimento.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  }
+}

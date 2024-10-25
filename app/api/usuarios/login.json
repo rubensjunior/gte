@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/index.ejs",
+      "linkedForm": "login"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "email",
+        "options": {
+          "rules": {
+            "core:email": {
+              "message": "Insira um e-mail válido."
+            },
+            "core:required": {
+              "message": "Campo obrigatorio."
+            }
+          }
+        },
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "fieldName": "senha",
+        "options": {
+          "rules": {
+            "core:required": {
+              "message": "Campo obrigatorio."
+            }
+          }
+        },
+        "name": "senha"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "identity",
+      "module": "auth",
+      "action": "login",
+      "options": {
+        "provider": "autenticacao",
+        "username": "{{$_POST.email}}",
+        "password": "{{$_POST.senha}}",
+        "remember": 1
+      },
+      "output": true,
+      "meta": []
+    }
+  }
+}

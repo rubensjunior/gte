@@ -10,6 +10,31 @@
       "path": "/master",
       "page": "master",
       "layout": "main"
+    },
+    {
+      "path": "/dashboard/",
+      "page": "dashboard/index",
+      "layout": "dashboard"
+    },
+    {
+      "path": "/d/trabalhadores",
+      "page": "dashboard/trabalhadores",
+      "layout": "dashboard"
+    },
+    {
+      "path": "/d/frequentadores",
+      "page": "dashboard/frequentadores",
+      "layout": "dashboard"
+    },
+    {
+      "path": "/d/atendimento",
+      "page": "dashboard/atendimento",
+      "layout": "dashboard"
     }
-  ]
+  ],
+  "layouts": {
+    "dashboard": {
+      "exec": "/api/master/pagina-restrita"
+    }
+  }
 }

@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form id="cadastrar">
+            <form id="cadastrar" is="dmx-serverconnect-form" method="post" action="/api/master/cadastrar-admin" dmx-on:error="cadastrar.reset();toasts.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="cadastrar.reset();toasts.success('Cadastro realizado com sucesso!')">
                 <div class="form-group mb-3"> <label for="nome" class="form-label">Nome completo</label>
                     <input type="text" class="form-control" id="nome" name="nome" aria-describedby="input1_help" placeholder="Enter some text">
                 </div>
