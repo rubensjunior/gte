@@ -1,0 +1,9 @@
+{
+  "bootstrap5": {
+    "basic": {
+      "headings-font-family": "Inter:900",
+      "font-family-base": "Inter:400"
+    },
+    "advanced": {}
+  }
+}

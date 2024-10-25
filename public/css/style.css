@@ -3,3 +3,10 @@
     font-weight: 500;
     line-height: 24px;
 }
+.new-shadow{
+    -webkit-box-shadow: 0 0 12px rgba(120, 130, 157, 0.20);
+            box-shadow: 0 0 12px rgba(120, 130, 157, 0.20);
+}
+.sub-title{
+    font-size: 13px;
+}

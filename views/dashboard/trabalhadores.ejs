@@ -1,34 +1,75 @@
-<!-- Wappler include head-page="layouts/dashboard" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="trabalhadores" appConnect="local" components="{dmxBootstrap5Modal:{}}" -->
+<!-- Wappler include head-page="layouts/dashboard" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="trabalhadores" appConnect="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{}}" -->
+
+<dmx-data-detail id="data_colaborador" dmx-bind:data="apiListarColaboradores.data.queryColaborador" key="id"></dmx-data-detail>
 <div class="modal" id="criarModalColaborador" is="dmx-bs5-modal" tabindex="-1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Criar colaborador</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" dmx-on:click="criarFormColaborador.reset()"></button>
             </div>
             <div class="modal-body">
-                <form id="criarFormColaborador">
-                    <div class="form-group mb-3"> <label for="input1" class="form-label">Nome completo</label>
-                        <input type="text" class="form-control py-2" id="input1" name="input1" aria-describedby="input1_help" placeholder="Enter some text">
+                <form id="criarFormColaborador" is="dmx-serverconnect-form" method="post" action="/api/trabalhadores/criar-colaborador" dmx-on:error="criarFormColaborador.reset();criarModalColaborador.hide();toast.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="criarFormColaborador.reset();criarModalColaborador.hide();apiListarColaboradores.load({});toast.success('Colaborador adicionado.')">
+                    <div class="form-group mb-3"> <label for="nomeColaborador" class="form-label">Nome completo</label>
+                        <input type="text" class="form-control py-2" id="nomeColaborador" name="nomeColaborador" aria-describedby="input1_help">
                     </div>
-                    <div class="form-group mb-3"> <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control py-2" id="email" name="email" aria-describedby="input1_help" placeholder="Enter some text">
+                    <div class="form-group mb-3"> <label for="emailColaborador" class="form-label">E-mail</label>
+                        <input type="email" class="form-control py-2" id="emailColaborador" name="emailColaborador" aria-describedby="input1_help">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Cadastrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="criarFormColaborador.reset()">Cancelar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="criarFormColaborador.submit()">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="editarModalColaborador" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar colaborador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" dmx-on:click="edidarFormColaborador.reset();data_colaborador.select(0)"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edidarFormColaborador" class="edidarFormColaborador" is="dmx-serverconnect-form" method="post" action="/api/trabalhadores/atualizar-colaborador" dmx-on:error="edidarFormColaborador.reset();data_colaborador.select(0);editarModalColaborador.hide();toast.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="edidarFormColaborador.reset();data_colaborador.select(0);apiListarColaboradores.load({});editarModalColaborador.hide();toast.info('Dados do trabalhador atualizado.')">
+                    <div class="form-group mb-3">
+                        <input type="hidden" class="form-control py-2" id="id" name="id" aria-describedby="input1_help" dmx-bind:value="data_colaborador.data.id">
+                        <input type="hidden" class="form-control py-2" id="editAtivo" name="editAtivo" aria-describedby="input1_help" dmx-bind:value="ativo.value">
+                    </div>
+                    <div class="form-group mb-3"> <label for="editNome" class="form-label">Nome completo</label>
+                        <input type="text" class="form-control py-2" id="editNome" name="editNome" aria-describedby="input1_help" dmx-bind:value="data_colaborador.data['nome-completo']">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="editEmail" class="form-label">E-mail</label>
+                        <input type="text" class="form-control py-2" id="editEmail" name="editEmail" aria-describedby="input1_help" dmx-bind:value="data_colaborador.data.email">
+
+                    </div>
+                    <div class="row rounded-2 border m-0 p-2 border-light-subtle">
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="ativo" name="ativo" dmx-bind:value="data_colaborador.data.ativo" dmx-bind:checked="data_colaborador.data.ativo==1" dmx-on:checked="ativo.setValue(1)" dmx-on:unchecked="ativo.setValue(0)">
+                                <label class="form-check-label" for="ativo">Ativo</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="edidarFormColaborador.reset();data_colaborador.select(0)">Cancelar</button>
+                <button type="button" class="btn btn-success" dmx-on:click="edidarFormColaborador.submit()">Atualizar</button>
             </div>
         </div>
     </div>
 </div>
 <dmx-serverconnect id="apiListarColaboradores" url="/api/trabalhadores/listar-colaborador"></dmx-serverconnect>
 <main>
-    <div class="d-flex flex-row justify-content-between align-items-center p-3 border rounded-3 mb-3 bg-body-tertiary">
+    <div class="d-flex flex-row justify-content-between align-items-center p-3 rounded-3 mb-3 bg-body-tertiary">
         <div class="d-flex align-items-center">
             <h4 class="m-0">Trabalhadores</h4>
-        </div><button id="btn1" class="btn btn-dark py-2">Cadastrar</button>
+        </div><button id="btn1" class="btn btn-dark py-2" data-bs-toggle="modal" data-bs-target="#criarModalColaborador">Cadastrar</button>
 
     </div>
     <div class="container-fluid">
@@ -42,13 +83,11 @@
                         <p class="m-0">{{email}}</p>
                     </div>
                     <div class="col align-self-center text-end p-0">
-                        <button id="btn2" class="btn btn-outline-secondary btn-sm">Ações</button>
+                        <button id="btn2" class="btn btn-sm btn-warning" dmx-on:click="editarModalColaborador.show();data_colaborador.select(id)">Ações</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </main>
 <meta name="ac:route" content="/d/trabalhadores">

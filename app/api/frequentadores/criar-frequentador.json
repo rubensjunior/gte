@@ -1,42 +1,58 @@
 {
   "meta": {
     "options": {
-      "linkedFile": "/views/dashboard/trabalhadores.ejs",
-      "linkedForm": "criarFormColaborador"
+      "linkedFile": "/views/dashboard/frequentadores.ejs",
+      "linkedForm": "criarFormFrequentador"
     },
     "$_POST": [
       {
         "type": "text",
-        "fieldName": "nomeColaborador",
+        "fieldName": "nome",
         "options": {
           "rules": {
             "core:required": {
-              "message": "Campo obrigatório"
-            }
-          }
-        },
-        "name": "nomeColaborador"
-      },
-      {
-        "type": "text",
-        "fieldName": "emailColaborador",
-        "options": {
-          "rules": {
-            "core:email": {
-              "message": "Insira um e-mail válido."
-            },
-            "core:required": {
+              "param": "",
               "message": "Campo obrigatório."
             }
           }
         },
-        "name": "emailColaborador"
+        "name": "nome"
+      },
+      {
+        "type": "text",
+        "fieldName": "email",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": "",
+              "message": "Campo obrigatório."
+            },
+            "core:email": {
+              "param": "",
+              "message": "Insira um e-mail válido."
+            }
+          }
+        },
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "fieldName": "whatsapp",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": "",
+              "message": "Campo obrigatório."
+            }
+          }
+        },
+        "name": "whatsapp"
       }
     ]
   },
   "exec": {
     "steps": {
-      "name": "insertColaborador",
+      "name": "insertFrequentador",
       "module": "dbupdater",
       "action": "insert",
       "options": {
@@ -48,13 +64,13 @@
               "table": "usuarios",
               "column": "nome-completo",
               "type": "text",
-              "value": "{{$_POST.nomeColaborador}}"
+              "value": "{{$_POST.nome}}"
             },
             {
               "table": "usuarios",
               "column": "email",
               "type": "text",
-              "value": "{{$_POST.emailColaborador}}"
+              "value": "{{$_POST.email}}"
             },
             {
               "table": "usuarios",
@@ -66,35 +82,47 @@
               "table": "usuarios",
               "column": "colaborador",
               "type": "boolean",
-              "value": "1"
+              "value": "0"
             },
             {
               "table": "usuarios",
               "column": "frequentador",
               "type": "boolean",
-              "value": "0"
+              "value": "1"
             },
             {
               "table": "usuarios",
               "column": "ativo",
               "type": "boolean",
               "value": "1"
+            },
+            {
+              "table": "usuarios",
+              "column": "whatsapp",
+              "type": "text",
+              "value": "{{$_POST.whatsapp}}"
             }
           ],
           "table": "usuarios",
           "returning": "id",
-          "query": "insert into `usuarios` (`admin`, `ativo`, `colaborador`, `email`, `frequentador`, `nome-completo`) values (?, ?, ?, ?, ?, ?)",
+          "query": "insert into `usuarios` (`admin`, `ativo`, `colaborador`, `email`, `frequentador`, `nome-completo`, `whatsapp`) values (?, ?, ?, ?, ?, ?, ?)",
           "params": [
             {
               "name": ":P1",
               "type": "expression",
-              "value": "{{$_POST.nomeColaborador}}",
+              "value": "{{$_POST.nome}}",
               "test": ""
             },
             {
               "name": ":P2",
               "type": "expression",
-              "value": "{{$_POST.emailColaborador}}",
+              "value": "{{$_POST.email}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.whatsapp}}",
               "test": ""
             }
           ]

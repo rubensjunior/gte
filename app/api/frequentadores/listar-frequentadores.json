@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "queryFrequentadores",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "usuarios",
+              "column": "id"
+            },
+            {
+              "table": "usuarios",
+              "column": "nome-completo"
+            },
+            {
+              "table": "usuarios",
+              "column": "email"
+            },
+            {
+              "table": "usuarios",
+              "column": "admin"
+            },
+            {
+              "table": "usuarios",
+              "column": "colaborador"
+            },
+            {
+              "table": "usuarios",
+              "column": "frequentador"
+            },
+            {
+              "table": "usuarios",
+              "column": "ativo"
+            },
+            {
+              "table": "usuarios",
+              "column": "whatsapp"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "usuarios"
+          },
+          "primary": "id",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "usuarios.frequentador",
+                "field": "usuarios.frequentador",
+                "type": "boolean",
+                "operator": "equal",
+                "value": true,
+                "data": {
+                  "table": "usuarios",
+                  "column": "frequentador",
+                  "type": "boolean",
+                  "columnObj": {
+                    "type": "boolean",
+                    "default": "'0'",
+                    "primary": false,
+                    "nullable": true,
+                    "name": "frequentador"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "query": "select `id`, `nome-completo`, `email`, `admin`, `colaborador`, `frequentador`, `ativo`, `whatsapp` from `usuarios` where `usuarios`.`frequentador` = ?"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "nome-completo"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "boolean",
+          "name": "admin"
+        },
+        {
+          "type": "boolean",
+          "name": "colaborador"
+        },
+        {
+          "type": "boolean",
+          "name": "frequentador"
+        },
+        {
+          "type": "boolean",
+          "name": "ativo"
+        },
+        {
+          "type": "text",
+          "name": "whatsapp"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

@@ -1,24 +1,52 @@
 {
   "meta": {
     "options": {
-      "linkedFile": "/views/dashboard/trabalhadores.ejs",
-      "linkedForm": "edidarFormColaborador"
+      "linkedFile": "/views/dashboard/frequentadores.ejs",
+      "linkedForm": "editarFormeFrequentador"
     },
     "$_POST": [
       {
         "type": "text",
         "fieldName": "editNome",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": "",
+              "message": "Campo obrigatório."
+            }
+          }
+        },
         "name": "editNome"
       },
       {
         "type": "text",
         "fieldName": "editEmail",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": "",
+              "message": "Campo obrigatório."
+            },
+            "core:email": {
+              "param": "",
+              "message": "Insira um e-mail válido."
+            }
+          }
+        },
         "name": "editEmail"
       },
       {
         "type": "text",
-        "fieldName": "editAtivo",
-        "name": "editAtivo"
+        "fieldName": "editWhatsapp",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": "",
+              "message": "Campo obrigatório."
+            }
+          }
+        },
+        "name": "editWhatsapp"
       },
       {
         "type": "number",
@@ -28,7 +56,7 @@
   },
   "exec": {
     "steps": {
-      "name": "update",
+      "name": "updateFrequentador",
       "module": "dbupdater",
       "action": "update",
       "options": {
@@ -40,22 +68,19 @@
               "table": "usuarios",
               "column": "nome-completo",
               "type": "text",
-              "value": "{{$_POST.editNome}}",
-              "recid": 1
+              "value": "{{$_POST.editNome}}"
             },
             {
               "table": "usuarios",
               "column": "email",
               "type": "text",
-              "value": "{{$_POST.editEmail}}",
-              "recid": 2
+              "value": "{{$_POST.editEmail}}"
             },
             {
               "table": "usuarios",
-              "column": "ativo",
-              "type": "boolean",
-              "value": "{{$_POST.editAtivo}}",
-              "recid": 3
+              "column": "whatsapp",
+              "type": "text",
+              "value": "{{$_POST.editWhatsapp}}"
             }
           ],
           "table": "usuarios",
@@ -78,7 +103,7 @@
             "valid": true
           },
           "returning": "id",
-          "query": "update `usuarios` set `nome-completo` = ?, `email` = ?, `ativo` = ? where `id` = ?",
+          "query": "update `usuarios` set `nome-completo` = ?, `email` = ?, `whatsapp` = ? where `id` = ?",
           "params": [
             {
               "name": ":P1",
@@ -95,7 +120,7 @@
             {
               "name": ":P3",
               "type": "expression",
-              "value": "{{$_POST.editAtivo}}",
+              "value": "{{$_POST.editWhatsapp}}",
               "test": ""
             },
             {
