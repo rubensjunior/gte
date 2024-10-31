@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/dashboard/atendimento.ejs",
+      "linkedForm": "criarFormAtendimento"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "criadopor",
+        "name": "criadopor"
+      },
+      {
+        "type": "text",
+        "fieldName": "frequentador",
+        "name": "frequentador"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "insertAtendimento",
+      "module": "dbupdater",
+      "action": "insert",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "insert",
+          "values": [
+            {
+              "table": "atendimentos",
+              "column": "frequentador",
+              "type": "number",
+              "value": "{{$_POST.frequentador}}"
+            },
+            {
+              "table": "atendimentos",
+              "column": "criado-em",
+              "type": "date",
+              "value": "{{NOW}}"
+            },
+            {
+              "table": "atendimentos",
+              "column": "criado-por",
+              "type": "number",
+              "value": "{{$_POST.criadopor}}"
+            }
+          ],
+          "table": "atendimentos",
+          "returning": "id",
+          "query": "insert into `atendimentos` (`criado-em`, `criado-por`, `frequentador`) values (?, ?, ?)",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.frequentador}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{NOW}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.criadopor}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "identity",
+          "type": "text"
+        },
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

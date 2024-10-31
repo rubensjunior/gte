@@ -20,6 +20,7 @@
   <script src="/dmxAppConnect/dmxDataTraversal/dmxDataTraversal.js" defer></script>
   <link rel="stylesheet" href="/dmxAppConnect/dmxValidator/dmxValidator.css" />
   <script src="/dmxAppConnect/dmxValidator/dmxValidator.js" defer></script>
+  <script src="/dmxAppConnect/dmxFormatter/dmxFormatter.js" defer></script>
 </head>
 
 <body is="dmx-app" id="dashboard">
@@ -30,7 +31,7 @@
   <div class="container-fluid vh-100">
     <div class="row h-100">
       <div class="col-12 col-md-3 col-xl-2 p-4 border-end border-light new-shadow">
-        <div class="d-flex justify-content-between mb-4 align-items-center">
+        <div class="d-flex justify-content-between mb-4 align-items-start">
           <div class="d-flex flex-column">
             <h5 class="m-0 fw-bold">Bem-vindo(a)</h5>
             <p class="m-0 sub-title">
@@ -39,6 +40,7 @@
           </div><button id="btn1" class="btn btn-sm btn-light" dmx-on:click="run([{run:{name:'deslogar',outputType:'text',action:`logout.load({})`}},{wait:{delay:500}},{run:{name:'redirecionar',outputType:'text',action:`navegacao.reload()`}}])">Sair</button>
         </div>
         <div class="nav w-100 flex-column">
+          <a class="nav-item nav-link text-dark border-bottom ps-0 nav-texto py-2" href="/dashboard/" internal="true">Inicio</a>
           <a class="nav-item nav-link text-dark border-bottom ps-0 nav-texto py-2" href="/d/trabalhadores" internal="true">Trabalhadores</a>
           <a class="nav-item nav-link text-dark border-bottom ps-0 nav-texto" href="/d/frequentadores" internal="true">Frequentadores</a>
           <a class="nav-item nav-link text-dark border-bottom ps-0 nav-texto" href="/d/atendimento" internal="true">Atendimento</a>

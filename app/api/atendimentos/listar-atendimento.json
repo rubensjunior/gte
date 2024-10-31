@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "queryListaAtendimentos",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "atendimentos",
+              "column": "*"
+            },
+            {
+              "table": "usuarios",
+              "column": "nome-completo"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "atendimentos"
+          },
+          "primary": "id",
+          "joins": [
+            {
+              "table": "usuarios",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "usuarios",
+                    "column": "id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "atendimentos",
+                      "column": "frequentador"
+                    }
+                  }
+                ]
+              },
+              "primary": "id"
+            }
+          ],
+          "query": "select `atendimentos`.*, `usuarios`.`nome-completo` from `atendimentos` inner join `usuarios` on `usuarios`.`id` = `atendimentos`.`frequentador`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "frequentador"
+        },
+        {
+          "type": "date",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "text",
+          "name": "nome-completo"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

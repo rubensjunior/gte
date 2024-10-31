@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/dashboard/atendimento.ejs",
+      "linkedForm": "criarFormNota"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "criadopor",
+        "name": "criadopor"
+      },
+      {
+        "type": "text",
+        "fieldName": "id",
+        "name": "id"
+      },
+      {
+        "type": "text",
+        "fieldName": "nota",
+        "name": "nota"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "insertNotas",
+      "module": "dbupdater",
+      "action": "insert",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "insert",
+          "values": [
+            {
+              "table": "notasAtendimentos",
+              "column": "atendimento",
+              "type": "number",
+              "value": "{{$_POST.id}}"
+            },
+            {
+              "table": "notasAtendimentos",
+              "column": "criado-por",
+              "type": "number",
+              "value": "{{$_POST.criadopor}}"
+            },
+            {
+              "table": "notasAtendimentos",
+              "column": "criado-em",
+              "type": "datetime",
+              "value": "{{NOW}}"
+            },
+            {
+              "table": "notasAtendimentos",
+              "column": "nota",
+              "type": "text",
+              "value": "{{$_POST.nota}}"
+            }
+          ],
+          "table": "notasAtendimentos",
+          "returning": "id",
+          "query": "insert into `notasAtendimentos` (`atendimento`, `criado-em`, `criado-por`, `nota`) values (?, ?, ?, ?)",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.id}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.criadopor}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{NOW}}",
+              "test": ""
+            },
+            {
+              "name": ":P4",
+              "type": "expression",
+              "value": "{{$_POST.nota}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "identity",
+          "type": "text"
+        },
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

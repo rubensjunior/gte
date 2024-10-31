@@ -130,5 +130,103 @@ dmx.config({
       ],
       "outputType": "array"
     }
+  },
+  "atendimento": {
+    "rpAtendimentos": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "frequentador"
+        },
+        {
+          "type": "date",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "text",
+          "name": "nome-completo"
+        }
+      ],
+      "outputType": "array"
+    },
+    "atendimentos": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "frequentador"
+        },
+        {
+          "type": "date",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        }
+      ],
+      "outputType": "array"
+    },
+    "data_atendimento": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "frequentador"
+        },
+        {
+          "type": "date",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "text",
+          "name": "nome-completo"
+        }
+      ],
+      "outputType": "array"
+    },
+    "rpNotas": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "atendimento"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "text",
+          "name": "nota"
+        }
+      ],
+      "outputType": "array"
+    }
   }
 });

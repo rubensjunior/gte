@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "number",
+        "name": "id"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "queryNotas",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "notasAtendimentos",
+              "column": "*"
+            },
+            {
+              "table": "criador",
+              "column": "nome-completo"
+            }
+          ],
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.id}}",
+              "test": ""
+            }
+          ],
+          "table": {
+            "name": "notasAtendimentos"
+          },
+          "primary": "id",
+          "joins": [
+            {
+              "table": "usuarios",
+              "column": "*",
+              "alias": "criador",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "criador",
+                    "column": "id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "notasAtendimentos",
+                      "column": "criado-por"
+                    }
+                  }
+                ]
+              },
+              "primary": "id"
+            }
+          ],
+          "query": "select `notasAtendimentos`.*, `criador`.`nome-completo` from `notasAtendimentos` inner join `usuarios` as `criador` on `criador`.`id` = `notasAtendimentos`.`criado-por` where `notasAtendimentos`.`atendimento` = ?",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "notasAtendimentos.atendimento",
+                "field": "notasAtendimentos.atendimento",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_GET.id}}",
+                "data": {
+                  "table": "notasAtendimentos",
+                  "column": "atendimento",
+                  "type": "number",
+                  "columnObj": {
+                    "type": "reference",
+                    "primary": false,
+                    "nullable": true,
+                    "references": "id",
+                    "inTable": "atendimentos",
+                    "referenceType": "integer",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "name": "atendimento"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          }
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "atendimento"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "text",
+          "name": "nota"
+        },
+        {
+          "type": "text",
+          "name": "nome-completo"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

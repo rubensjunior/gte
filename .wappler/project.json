@@ -48,9 +48,15 @@
       "mySQL_databaseName": "gestaoespirita",
       "mySQL_username": "db_user",
       "mySQL_password": "@Baki025"
+    },
+    {
+      "name": "servidorLocal",
+      "remoteURL": "http://localhost:8100",
+      "targetType": "wappler",
+      "access": "local"
     }
   ],
-  "activeTarget": "Development",
+  "activeTarget": "servidorLocal",
   "projectType": "web",
   "extensions": []
 }
